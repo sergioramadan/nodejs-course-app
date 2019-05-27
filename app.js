@@ -1,13 +1,43 @@
 const http = require('http');
+const fs = require('fs');
 
 // Create an instance of the http server to handle HTTP requests
 let app = http.createServer((req, res) => {
-    console.log(req);
-    // Set a response type of plain text for the response
-    res.writeHead(200, {'Content-Type': 'text/plain'});
+    const url = req.url;
+    const method = req.method;
 
-    // Send back a response and end the connection
-    res.end('Hello World!\n');
+    // Use main path to generate the form
+    if (url === '/') {
+        res.write('<html>');
+        res.write('<head><title>Enter Message</title></head>');
+        res.write('<body><form action="/message" method="POST"><input type="text" name="message" /><button type="submit">Send</button></form></body>');
+        res.write('</html>');
+        return res.end();
+    }
+
+    // Once the message form is received, store DUMMY text and redirects back to '/'
+    if (url === '/message' && method === 'POST') {
+        const body = [];
+        req.on('data', (chunk) => {
+            console.log(chunk);
+            body.push(chunk);
+        });
+        req.on('end', () => {
+            const parsedBody = Buffer.concat(body).toString();
+            console.log(parsedBody);
+            const message =  parsedBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
+        });
+        res.statusCode = 302;
+        res.setHeader('Location','/');
+        return res.end();
+    }
+
+    res.write('<html>');
+    res.write('<head><title>My First Page</title></head>');
+    res.write('<body><h1>Hello from my Node.js</h1></body>');
+    res.write('</html>');
+    return res.end();
 });
 
 // Start the server on port 3000
