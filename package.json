@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-course-app",
+  "version": "1.0.0",
+  "description": "Starting up with Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergioramadan/nodejs-course-app.git"
+  },
+  "author": "Sergio Ramadan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergioramadan/nodejs-course-app/issues"
+  },
+  "homepage": "https://github.com/sergioramadan/nodejs-course-app#readme"
+}
