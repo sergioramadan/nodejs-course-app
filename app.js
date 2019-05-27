@@ -23,14 +23,16 @@ let app = http.createServer((req, res) => {
             body.push(chunk);
         });
         req.on('end', () => {
-            const parsedBody = Buffer.concat(body).toString();
-            console.log(parsedBody);
+            const parsedBody = Buffer.concat(body).toString(); // TODO: Learn more about Buffer
             const message =  parsedBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
+
+            //Way to handle writeFile Asyncroniously
+            fs.writeFile('message.txt', message, (err) => {
+                res.statusCode = 302;
+                res.setHeader('Location','/');
+                return res.end();
+            });
         });
-        res.statusCode = 302;
-        res.setHeader('Location','/');
-        return res.end();
     }
 
     res.write('<html>');
