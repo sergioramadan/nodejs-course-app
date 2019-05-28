@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
+// GET /admin/add-product
 router.get('/add-product', (req, res, next) => {
     console.log('In the middleware!');
     res.send(
@@ -9,7 +10,8 @@ router.get('/add-product', (req, res, next) => {
     );
 });
 
-router.post('/product', (req, res, next) => {
+// POST /admin/add-product
+router.post('/add-product', (req, res, next) => {
     console.log(req.body);
     res.redirect('/');
 });
